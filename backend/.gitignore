@@ -1,0 +1,26 @@
+# Environment Variables - NEVER commit these
+.env
+.env.local
+.env.production
+.env.*
+
+# Dependencies
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Uploads (local storage - use Cloudinary in production)
+uploads/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Debug files
+debugDB.js
+listDBInfo.js
+listDatabases.js
+migrateDB.js
