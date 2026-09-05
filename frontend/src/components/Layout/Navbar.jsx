@@ -54,7 +54,8 @@ const Navbar = () => {
                                 alt="Logo"
                                 className="w-10 h-10 object-cover rounded-full border-2 border-sky-500/30 group-hover:border-sky-500 transition-all duration-300 shadow-lg shadow-sky-500/20"
                                 onError={(e) => {
-                                    e.target.src = "https://ui-avatars.com/api/?name=Portfolio&background=6366f1&color=fff";
+                                    e.target.onerror = null;
+                                    e.target.src = "/logo.png";
                                 }}
                             />
                             <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-[#0f172a] rounded-full"></div>
