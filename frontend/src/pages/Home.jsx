@@ -24,7 +24,6 @@ const Home = () => {
     if (!content) {
         return (
             <div className="container mx-auto px-6 min-h-[calc(100vh-6rem)] flex items-center justify-center">
-                <div className="w-10 h-10 border-4 border-gray-700 border-t-sky-400 rounded-full animate-spin" />
             </div>
         );
     }
