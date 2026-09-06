@@ -3,30 +3,10 @@ import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
+import { useApiData } from '../hooks/useApiData';
 
 const Home = () => {
-    const [content, setContent] = useState(null);
-
-    useEffect(() => {
-        const fetchHome = async () => {
-            try {
-                const { data } = await api.get('/content/home');
-                setContent(data);
-            } catch (error) {
-                console.error('Error fetching home content:', error);
-            }
-        };
-        fetchHome();
-    }, []);
-
-    // Data aane tak, blank ki jagah ek theme-matching spinner —
-    // same container size use kiya hai taake content aane par layout "jump" na ho
-    if (!content) {
-        return (
-            <div className="container mx-auto px-6 min-h-[calc(100vh-6rem)] flex items-center justify-center">
-            </div>
-        );
-    }
+    const { data: content } = useApiData('/content/home', () => api.get('/content/home'));
 
     return (
         <div className="container mx-auto px-6 min-h-[calc(100vh-6rem)] flex flex-col md:flex-row items-center justify-center gap-12">
@@ -39,20 +19,20 @@ const Home = () => {
                 <div className="space-y-4">
                     <h2 className="text-sky-400 font-medium tracking-widest uppercase text-sm">Hello, I'm Abdullah Anis</h2>
                     <h1 className="text-3xl md:text-5xl font-bold leading-tight min-h-[4rem]">
-                        <Typewriter text={content.heroTitle || "Welcome to my Portfolio"} />
+                        <Typewriter text={content?.heroTitle || "Welcome to my Portfolio"} />
                     </h1>
                     <p className="text-xl text-gray-400 max-w-lg leading-relaxed">
-                        {content.heroSubtitle}
+                        {content?.heroSubtitle}
                     </p>
                 </div>
 
                 <div className="flex flex-wrap gap-4">
                     <Link to="/projects" className="btn-primary flex items-center gap-2 group">
-                        {content.ctaButtons.projects}
+                        {content?.ctaButtons?.projects || "Projects"}
                         <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
                     </Link>
                     <Link to="/contact" className="btn-secondary">
-                        {content.ctaButtons.contact}
+                        {content?.ctaButtons?.contact || "Contact"}
                     </Link>
                 </div>
 
@@ -74,7 +54,7 @@ const Home = () => {
                     <div className="absolute -top-10 -right-10 w-40 h-40 bg-cyan-500/20 blur-[80px] rounded-full" />
 
                     <img
-                        src={content.heroImage || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=800&q=80'}
+                        src={content?.heroImage || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=800&q=80'}
                         alt="Profile"
                         fetchPriority="high"
                         decoding="async"

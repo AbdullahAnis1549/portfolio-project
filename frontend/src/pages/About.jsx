@@ -13,8 +13,6 @@ const About = () => {
     const education = educationData ?? [];
     const services = servicesData ?? [];
 
-    if (!content) return null;
-
     return (
         <div className="container mx-auto px-6 pb-20">
             {/* Bio Section */}
@@ -41,17 +39,17 @@ text-lg
 leading-relaxed
 whitespace-pre-wrap
 ">
-                        {content.fullBio}
+                        {content?.fullBio}
                     </p>
 
                     <div className="grid grid-cols-2 gap-6 pt-4 border-t border-white/5">
                         <div className="space-y-1">
                             <p className="text-gray-500 text-sm uppercase tracking-wider">Location</p>
-                            <p className="text-white font-medium">{content.personalInfo.location}</p>
+                            <p className="text-white font-medium">{content?.personalInfo?.location}</p>
                         </div>
                         <div className="space-y-1">
                             <p className="text-gray-500 text-sm uppercase tracking-wider">Availability</p>
-                            <p className="text-white font-medium">{content.personalInfo.availability}</p>
+                            <p className="text-white font-medium">{content?.personalInfo?.availability}</p>
                         </div>
                     </div>
                 </motion.div>

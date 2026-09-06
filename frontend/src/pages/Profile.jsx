@@ -7,32 +7,9 @@ import { useApiData } from '../hooks/useApiData';
 const Profile = () => {
     // Same cache keys used by Home/About/Contact - if the visitor already
     // viewed those pages this navigates here with zero network requests.
-    const { data: home, loading: homeLoading } = useApiData('/content/home', () => api.get('/content/home'));
-    const { data: about, loading: aboutLoading } = useApiData('/content/about', () => api.get('/content/about'));
-    const { data: contact, loading: contactLoading } = useApiData('/contact/info', () => api.get('/contact/info'));
-    const loading = homeLoading || aboutLoading || contactLoading;
-
-    if (loading) {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-[#020617]">
-                <div className="relative">
-                    <div className="w-16 h-16 border-4 border-sky-500/20 rounded-full"></div>
-                    <div className="w-16 h-16 border-4 border-sky-500 border-t-transparent rounded-full animate-spin absolute top-0 left-0"></div>
-                </div>
-            </div>
-        );
-    }
-
-    if (!home || !about || !contact) {
-        return (
-            <div className="min-h-screen flex items-center justify-center text-gray-400 bg-[#020617]">
-                <div className="text-center">
-                    <ShieldCheck className="w-16 h-16 text-sky-500/50 mx-auto mb-4" />
-                    <p className="text-xl font-medium">Profile synchronization required.</p>
-                </div>
-            </div>
-        );
-    }
+    const { data: home } = useApiData('/content/home', () => api.get('/content/home'));
+    const { data: about } = useApiData('/content/about', () => api.get('/content/about'));
+    const { data: contact } = useApiData('/contact/info', () => api.get('/contact/info'));
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -85,7 +62,7 @@ const Profile = () => {
                                 <div className="relative group">
                                     <div className="absolute -inset-1 bg-gradient-to-r from-sky-500 to-cyan-600 rounded-[2.5rem] blur opacity-50 group-hover:opacity-100 transition duration-500"></div>
                                     <img
-                                        src={home.heroImage || "https://ui-avatars.com/api/?name=Admin&background=6366f1&color=fff&size=200"}
+                                        src={home?.heroImage || "https://ui-avatars.com/api/?name=Admin&background=6366f1&color=fff&size=200"}
                                         alt="Profile"
                                         className="w-40 h-40 rounded-[2.2rem] border-4 border-[#020617] object-cover shadow-2xl relative"
                                     />
@@ -101,14 +78,14 @@ const Profile = () => {
                                     <motion.h1
                                         className="text-4xl md:text-5xl font-extrabold text-white tracking-tight"
                                     >
-                                        {home.heroTitle || 'Administrator'}
+                                        {home?.heroTitle || 'Administrator'}
                                     </motion.h1>
                                     <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-3">
-                                        <p className="text-sky-400 font-semibold text-lg">{home.heroSubtitle || 'Portfolio Owner'}</p>
+                                        <p className="text-sky-400 font-semibold text-lg">{home?.heroSubtitle || 'Portfolio Owner'}</p>
                                         <span className="w-1.5 h-1.5 rounded-full bg-white/20 hidden md:block"></span>
                                         <div className="flex items-center gap-1.5 text-gray-400 text-sm">
                                             <MapPin size={14} />
-                                            <span>{about.personalInfo?.location || contact.location || 'Karachi, Pakistan'}</span>
+                                            <span>{about?.personalInfo?.location || contact?.location || 'Karachi, Pakistan'}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -134,7 +111,7 @@ const Profile = () => {
                                                 <Calendar className="text-sky-400" size={24} />
                                             </div>
                                             <p className="text-xs text-gray-500 uppercase font-bold tracking-widest mb-1">Availability</p>
-                                            <p className="text-white font-medium text-lg">{about.personalInfo?.availability || 'Available for Projects'}</p>
+                                            <p className="text-white font-medium text-lg">{about?.personalInfo?.availability || 'Available for Projects'}</p>
                                         </div>
                                         <div className="p-6 rounded-3xl bg-white/[0.03] border border-white/5 hover:border-cyan-500/30 transition-colors group">
                                             <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -154,12 +131,12 @@ const Profile = () => {
                                         <div className="prose prose-invert max-w-none">
                                             <div className="p-8 rounded-3xl bg-gradient-to-br from-sky-500/5 to-cyan-500/5 border border-white/5">
                                                 <p className="text-gray-300 leading-relaxed text-lg italic">
-                                                    "{about.personalInfo?.title || 'Driven by the passion to build scalable and innovative web solutions that leave a lasting impact.'}"
+                                                    "{about?.personalInfo?.title || 'Driven by the passion to build scalable and innovative web solutions that leave a lasting impact.'}"
                                                 </p>
                                             </div>
                                         </div>
 
-                                        {about.fullBio && (
+                                        {about?.fullBio && (
                                             <div className="space-y-4">
                                                 <h3 className="text-lg font-bold text-sky-400">Background & Philosophy</h3>
                                                 <div className="text-gray-400 leading-relaxed space-y-4">
@@ -177,16 +154,16 @@ const Profile = () => {
                                     <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/5 space-y-6">
                                         <h3 className="text-lg font-bold text-white mb-4">Contact Details</h3>
                                         <div className="space-y-4">
-                                            <a href={`mailto:${contact.email}`} className="flex items-center gap-4 p-3 rounded-2xl hover:bg-white/5 transition-colors group">
+                                            <a href={`mailto:${contact?.email || 'admin@portfolio.com'}`} className="flex items-center gap-4 p-3 rounded-2xl hover:bg-white/5 transition-colors group">
                                                 <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
                                                     <Mail size={18} className="text-gray-400 group-hover:text-white" />
                                                 </div>
                                                 <div className="overflow-hidden">
                                                     <p className="text-[10px] text-gray-500 uppercase font-bold">Primary Email</p>
-                                                    <p className="text-sm text-gray-300 truncate">{contact.email || 'admin@portfolio.com'}</p>
+                                                    <p className="text-sm text-gray-300 truncate">{contact?.email || 'admin@portfolio.com'}</p>
                                                 </div>
                                             </a>
-                                            {contact.phone && (
+                                            {contact?.phone && (
                                                 <div className="flex items-center gap-4 p-3 rounded-2xl hover:bg-white/5 transition-colors group">
                                                     <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center shrink-0">
                                                         <Phone size={18} className="text-gray-400 group-hover:text-white" />
