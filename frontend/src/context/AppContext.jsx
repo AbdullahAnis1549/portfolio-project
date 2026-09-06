@@ -4,17 +4,28 @@ import { fetchAndCache } from '../hooks/useApiData';
 
 const AppContext = createContext();
 
+// Critical routes that MUST be loaded before any page renders
+const CRITICAL_ROUTES = [
+    '/content/home',
+    '/content/about',
+    '/education',
+    '/services',
+    '/skills',
+    '/projects',
+    '/contact/info',
+];
+
 export const AppProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [siteSettings, setSiteSettings] = useState(null);
+    // true = still waiting for critical data, false = ready to render pages
+    const [appReady, setAppReady] = useState(false);
 
     useEffect(() => {
         const loadUser = async () => {
             const token = localStorage.getItem('token');
             if (token) {
-                // Here you would typically verify the token with the backend
-                // For now we'll just set a dummy user if token exists
                 setUser({ token });
             }
             setLoading(false);
@@ -29,22 +40,16 @@ export const AppProvider = ({ children }) => {
             }
         };
 
-        const prefetchCriticalData = () => {
-            // Fire ALL page data requests in parallel at app startup.
-            // useApiData uses a module-level cache so by the time any page
-            // mounts, its data is already cached — no flash of empty content.
-            const routes = [
-                '/content/home',
-                '/content/about',
-                '/education',
-                '/services',
-                '/skills',
-                '/projects',
-                '/contact/info',
-            ];
-            routes.forEach((route) =>
-                fetchAndCache(route, () => api.get(route))
+        const prefetchCriticalData = async () => {
+            // Wait for ALL critical routes to resolve before revealing the app.
+            // This prevents the 1-second blank/partial flash on Vercel where the
+            // backend cold-start means data isn't ready when the page first renders.
+            await Promise.allSettled(
+                CRITICAL_ROUTES.map((route) =>
+                    fetchAndCache(route, () => api.get(route))
+                )
             );
+            setAppReady(true);
         };
 
         loadUser();
@@ -66,9 +71,26 @@ export const AppProvider = ({ children }) => {
 
     return (
         <AppContext.Provider value={{ user, loading, siteSettings, login, logout }}>
-            {children}
+            {appReady ? children : <AppLoader />}
         </AppContext.Provider>
     );
 };
+
+// Minimal full-screen loader shown while critical data is being fetched
+const AppLoader = () => (
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[#0f172a] gap-6">
+        {/* Animated logo / initials */}
+        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 to-violet-600 flex items-center justify-center shadow-lg shadow-sky-500/30 animate-pulse">
+            <span className="text-white font-bold text-xl">AA</span>
+        </div>
+
+        {/* Spinner */}
+        <div className="flex gap-2">
+            <span className="w-2 h-2 rounded-full bg-sky-400 animate-bounce" style={{ animationDelay: '0ms' }} />
+            <span className="w-2 h-2 rounded-full bg-sky-400 animate-bounce" style={{ animationDelay: '150ms' }} />
+            <span className="w-2 h-2 rounded-full bg-sky-400 animate-bounce" style={{ animationDelay: '300ms' }} />
+        </div>
+    </div>
+);
 
 export const useApp = () => useContext(AppContext);
