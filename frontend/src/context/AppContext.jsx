@@ -79,18 +79,30 @@ export const AppProvider = ({ children }) => {
 // Minimal full-screen loader shown while critical data is being fetched
 const AppLoader = () => (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[#0f172a] gap-6">
-        {/* Animated logo / initials */}
-        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 to-violet-600 flex items-center justify-center shadow-lg shadow-sky-500/30 animate-pulse">
-            <span className="text-white font-bold text-xl">AA</span>
+        {/* Logo */}
+        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 to-violet-600 flex items-center justify-center shadow-lg shadow-sky-500/30 animate-pulse overflow-hidden">
+            <img
+                src="/logo.png"
+                alt="AA Logo"
+                className="w-full h-full object-cover"
+            />
         </div>
 
         {/* Spinner */}
         <div className="flex gap-2">
-            <span className="w-2 h-2 rounded-full bg-sky-400 animate-bounce" style={{ animationDelay: '0ms' }} />
-            <span className="w-2 h-2 rounded-full bg-sky-400 animate-bounce" style={{ animationDelay: '150ms' }} />
-            <span className="w-2 h-2 rounded-full bg-sky-400 animate-bounce" style={{ animationDelay: '300ms' }} />
+            <span
+                className="w-2 h-2 rounded-full bg-sky-400 animate-bounce"
+                style={{ animationDelay: '0ms' }}
+            />
+            <span
+                className="w-2 h-2 rounded-full bg-sky-400 animate-bounce"
+                style={{ animationDelay: '150ms' }}
+            />
+            <span
+                className="w-2 h-2 rounded-full bg-sky-400 animate-bounce"
+                style={{ animationDelay: '300ms' }}
+            />
         </div>
     </div>
 );
-
 export const useApp = () => useContext(AppContext);
