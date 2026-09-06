@@ -16,7 +16,9 @@ const Layout = ({ children }) => {
             <div className="bg-glow-wrapper"></div>
             {!isAdminRoute && <Navbar />}
             <main className={`flex-grow relative z-10 ${!isAdminRoute ? 'pt-24' : ''}`}>
-                {children}
+                <div key={location.pathname} className="animate-pageEnter">
+                    {children}
+                </div>
             </main>
             {!isAdminRoute && <Footer />}
         </div>

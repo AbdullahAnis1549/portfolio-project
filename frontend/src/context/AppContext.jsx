@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import api from '../services/api';
+import { fetchAndCache } from '../hooks/useApiData';
 
 const AppContext = createContext();
 
@@ -28,8 +29,27 @@ export const AppProvider = ({ children }) => {
             }
         };
 
+        const prefetchCriticalData = () => {
+            // Fire ALL page data requests in parallel at app startup.
+            // useApiData uses a module-level cache so by the time any page
+            // mounts, its data is already cached — no flash of empty content.
+            const routes = [
+                '/content/home',
+                '/content/about',
+                '/education',
+                '/services',
+                '/skills',
+                '/projects',
+                '/contact/info',
+            ];
+            routes.forEach((route) =>
+                fetchAndCache(route, () => api.get(route))
+            );
+        };
+
         loadUser();
         fetchSettings();
+        prefetchCriticalData();
     }, []);
 
     const login = async (email, password) => {

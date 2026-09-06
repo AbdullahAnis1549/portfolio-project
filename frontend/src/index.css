@@ -136,3 +136,19 @@
   height: 50vw;
   background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
 }
+
+/* Page enter animation */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-pageEnter {
+  animation: page-enter 0.45s ease-out both;
+}

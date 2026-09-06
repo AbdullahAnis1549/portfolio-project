@@ -35,7 +35,7 @@ function isStale(entry) {
     return !entry || Date.now() - entry.timestamp > STALE_AFTER_MS;
 }
 
-function fetchAndCache(key, fetchFn) {
+export function fetchAndCache(key, fetchFn) {
     if (inFlight.has(key)) {
         return inFlight.get(key);
     }
