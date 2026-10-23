@@ -12,7 +12,7 @@ const Layout = ({ children }) => {
     }, [location.pathname]);
 
     return (
-        <div className="min-h-screen flex flex-col relative">
+        <div className="min-h-screen flex flex-col relative bg-[#07080a] text-[#f8fafc]">
             <div className="bg-glow-wrapper"></div>
             {!isAdminRoute && <Navbar />}
             <main className={`flex-grow relative z-10 ${!isAdminRoute ? 'pt-24' : ''}`}>

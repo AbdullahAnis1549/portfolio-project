@@ -26,26 +26,26 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-[#0f172a]">
+        <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-[#07080a]">
 
             {/* Background glow orbs */}
-            <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-sky-500/10 blur-[120px] pointer-events-none" />
-            <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-violet-500/10 blur-[120px] pointer-events-none" />
+            <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-blue-600/15 blur-[140px] pointer-events-none" />
+            <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-cyan-400/10 blur-[140px] pointer-events-none" />
 
             {/* Card */}
             <div className="relative z-10 w-full max-w-md mx-4 animate-pageEnter">
 
                 {/* Logo / Icon */}
                 <div className="flex flex-col items-center mb-8">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 to-violet-600 flex items-center justify-center shadow-lg shadow-sky-500/30 mb-4">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/30 mb-4 border border-white/20">
                         <Shield size={30} className="text-white" />
                     </div>
-                    <h1 className="text-3xl font-bold text-white">Admin Portal</h1>
-                    <p className="text-gray-400 mt-1 text-sm">Sign in to manage your portfolio</p>
+                    <h1 className="text-3xl font-extrabold text-white tracking-tight">Admin Portal</h1>
+                    <p className="text-slate-400 mt-1 text-sm">Sign in to manage your portfolio</p>
                 </div>
 
                 {/* Glass form card */}
-                <div className="bg-white/[0.04] backdrop-blur-2xl border border-white/10 rounded-3xl p-8 shadow-2xl space-y-6">
+                <div className="glass-card p-8 shadow-2xl space-y-6 border border-white/[0.08]">
 
                     {/* Error */}
                     {error && (
@@ -58,15 +58,15 @@ const Login = () => {
                     <form onSubmit={handleSubmit} className="space-y-5">
                         {/* Email */}
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-300">Email Address</label>
+                            <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Email Address</label>
                             <div className="relative">
-                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
+                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                                 <input
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 outline-none text-white placeholder-gray-500 focus:border-sky-500/60 focus:ring-2 focus:ring-sky-500/20 transition-all"
+                                    className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl py-3.5 pl-12 pr-4 outline-none text-white placeholder-slate-500 focus:border-blue-500/60 focus:ring-2 focus:ring-blue-500/20 transition-all text-sm"
                                     placeholder="admin@example.com"
                                 />
                             </div>
@@ -74,15 +74,15 @@ const Login = () => {
 
                         {/* Password */}
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-300">Password</label>
+                            <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Password</label>
                             <div className="relative">
-                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
+                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                                 <input
                                     type="password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 outline-none text-white placeholder-gray-500 focus:border-sky-500/60 focus:ring-2 focus:ring-sky-500/20 transition-all"
+                                    className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl py-3.5 pl-12 pr-4 outline-none text-white placeholder-slate-500 focus:border-blue-500/60 focus:ring-2 focus:ring-blue-500/20 transition-all text-sm"
                                     placeholder="••••••••"
                                 />
                             </div>
@@ -92,8 +92,7 @@ const Login = () => {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full py-3.5 rounded-xl font-semibold text-white transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
-                            style={{ background: 'linear-gradient(to right, #0ea5e9, #7c3aed)' }}
+                            className="w-full btn-primary py-3.5 rounded-xl font-semibold text-white transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed text-base shadow-lg shadow-blue-600/30"
                         >
                             {loading ? (
                                 <span className="flex items-center justify-center gap-2">
