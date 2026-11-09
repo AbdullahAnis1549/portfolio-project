@@ -76,32 +76,40 @@ export const AppProvider = ({ children }) => {
     );
 };
 
-// Minimal full-screen loader shown while critical data is being fetched
+// Full-screen loader shown while critical data is being fetched
 const AppLoader = () => (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[#0f172a] gap-6">
-        {/* Logo */}
-        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 to-violet-600 flex items-center justify-center shadow-lg shadow-sky-500/30 animate-pulse overflow-hidden">
-            <img
-                src="/logo.png"
-                alt="AA Logo"
-                className="w-full h-full object-cover"
-            />
-        </div>
+    <div
+        role="status"
+        aria-label="Loading portfolio"
+        className="relative flex min-h-screen w-full flex-col items-center justify-center gap-6 overflow-hidden bg-[#07080a] text-[#f8fafc]"
+        style={{
+            backgroundImage:
+                'radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px), radial-gradient(ellipse at 15% 15%, rgba(0, 102, 255, 0.16), transparent 55%), radial-gradient(ellipse at 85% 85%, rgba(0, 210, 255, 0.12), transparent 55%)',
+            backgroundSize: '32px 32px, 100% 100%, 100% 100%',
+        }}
+    >
+        <div className="relative flex flex-col items-center gap-6">
+            <div className="h-16 w-16 overflow-hidden rounded-2xl border border-white/15 bg-gradient-to-br from-[#0052cc] via-[#0066ff] to-[#00d2ff] shadow-[0_0_30px_rgba(0,102,255,0.35)] animate-pulse">
+                <img
+                    src="/logo.png"
+                    alt="Abdullah Anis logo"
+                    className="h-full w-full object-cover"
+                />
+            </div>
 
-        {/* Spinner */}
-        <div className="flex gap-2">
-            <span
-                className="w-2 h-2 rounded-full bg-sky-400 animate-bounce"
-                style={{ animationDelay: '0ms' }}
-            />
-            <span
-                className="w-2 h-2 rounded-full bg-sky-400 animate-bounce"
-                style={{ animationDelay: '150ms' }}
-            />
-            <span
-                className="w-2 h-2 rounded-full bg-sky-400 animate-bounce"
-                style={{ animationDelay: '300ms' }}
-            />
+            <span className="text-sm font-medium tracking-wide text-slate-300">
+                Loading portfolio
+            </span>
+
+            <div className="flex gap-2" aria-hidden="true">
+                {[0, 150, 300].map((delay) => (
+                    <span
+                        key={delay}
+                        className="h-2 w-2 rounded-full bg-[#38bdf8] shadow-[0_0_12px_rgba(0,210,255,0.6)] animate-bounce"
+                        style={{ animationDelay: `${delay}ms` }}
+                    />
+                ))}
+            </div>
         </div>
     </div>
 );
